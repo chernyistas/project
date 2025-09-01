@@ -3,7 +3,6 @@
 ## Описание:
 
 Проект "Виджет банковских операций клиента" - это приложение на Python для выполнения различных задач, таких как маскировка номеров кредитных карт и счетов клиентов банка.
-
 ## Установка:
 
 1. Клонируйте репозиторий:
@@ -14,3 +13,12 @@ git clone https://github.com/chernyistas/project.git
 ```
 pip install -r requirements.txt
 
+## Установка:
+
+1. Клонируйте репозиторий:
+```
+git clone https://github.com/chernyistas/project.git
+```
+2. Установите зависимости:
+```
+pip install -r requirements.txt

@@ -9,4 +9,4 @@ def filter_by_state(transaction_list: list, state: str = "EXECUTED") -> list:
 
 def sort_by_date(transaction_list: list, ascending: bool = True) -> list:
     """Функция возвращает новый список, отсортированный по дате"""
-    return sorted(transaction_list, key=lambda x: datetime.fromisoformat(x["date"]), reverse=ascending)
+    return sorted(transaction_list, key=lambda x: datetime.fromisoformat(x["date"]), reverse=not ascending)

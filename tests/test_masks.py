@@ -7,6 +7,7 @@ def test_get_mask_card_number_basic(card_basic: int) -> None:
     assert get_mask_card_number(card_basic) == "1234 56** **** 3456"  # Обычный случай
 
 
+# Проверка с некорректными значениями
 @pytest.mark.parametrize(
     "card_number, expected",
     [

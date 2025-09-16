@@ -13,7 +13,7 @@ def test_filter_by_currency_usd(transactions_: List[Dict[str, Dict[str, Dict[str
 
 
 def test_filter_by_currency_rub(transactions_: List[Dict[str, Dict[str, Dict[str, str]]]]) -> None:
-    # Проверка фильтрации по USD
+    # Проверка фильтрации по RUB
     result = filter_by_currency(transactions_, "RUB")
     for transaction in result:
         assert transaction["operationAmount"]["currency"]["name"] == "RUB"

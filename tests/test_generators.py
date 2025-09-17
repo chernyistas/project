@@ -45,19 +45,6 @@ def test_filter_by_currency_iterator(transactions_: List[Dict[str, Dict[str, Dic
     assert third["id"] == 895315941
 
 
-def test_transaction_descriptions(transactions_: list[dict[str, str]]) -> None:
-    # Тест на корректную работу итератора
-    iterator = transaction_descriptions(transactions_)
-
-    first = next(iterator)
-    second = next(iterator)
-    third = next(iterator)
-
-    assert first == "Перевод организации"
-    assert second == "Перевод со счета на счет"
-    assert third == "Перевод со счета на счет"
-
-
 def test_transaction_descriptions_stop(transactions_: list[dict[str, str]]) -> None:
     # Проверка с вызовом StopIteration
     iterator = transaction_descriptions(transactions_)
@@ -67,6 +54,32 @@ def test_transaction_descriptions_stop(transactions_: list[dict[str, str]]) -> N
 
     with pytest.raises(StopIteration):
         next(iterator)
+
+
+# Тест с разными параметрами
+@pytest.mark.parametrize(
+    "transactions, expected",
+    [
+        (
+            [
+                {"description": "Покупка в магазине"},
+                {"description": "Снятие наличных"},
+            ],
+            ["Покупка в магазине", "Снятие наличных"],
+        ),
+        (
+            [
+                {"description": "Оплата интернета"},
+                {"description": "Перевод другу"},
+                {"description": "Платеж по кредиту"},
+            ],
+            ["Оплата интернета", "Перевод другу", "Платеж по кредиту"],
+        ),
+    ],
+)
+def test_transaction_descriptions(transactions: list[dict[str, str]], expected: str) -> None:
+    result = list(transaction_descriptions(transactions))
+    assert result == expected
 
 
 def test_transaction_descriptions_empty() -> None:
@@ -98,3 +111,5 @@ def test_card_number_generator_limit_value() -> None:
     # Проверка на граничное значение
     gen = card_number_generator(9999999999999999)
     assert next(gen) == "9999 9999 9999 9999"
+    gen = card_number_generator(1111111111111111)
+    assert next(gen) == "1111 1111 1111 1111"

@@ -9,6 +9,7 @@ def get_mask_card_number(card_number: int) -> str:
     # Проверяем количество цифр в карте
     if len(card_str) != 16:
         raise ValueError("Неверное количество цифр")
+
     # Формируем маскировочный номер
     masked_card = card_str[:4] + " " + card_str[4:6] + "** ****" + " " + card_str[-4:]
     return masked_card
@@ -23,7 +24,7 @@ def get_mask_account(account_number: int) -> str:
     if not account_str.isdigit():
         raise ValueError("Неверный формат")
     # Проверяем количество цифр в карте
-    if len(account_str) != 20:
+    if len(account_str) < 20:
         raise ValueError("Неверное количество цифр")
     # Формируем маскировочный номер
     masked_account = "**" + account_str[-4:]

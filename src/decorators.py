@@ -1,8 +1,8 @@
 from functools import wraps
-from typing import Any, Callable, Optional, ParamSpec, TypeVar
+from typing import Callable, Optional, ParamSpec, TypeVar
 
-T = TypeVar('T')  # Обобщённый тип для возвращаемого значения
-P = ParamSpec('P')  # Параметры функции, которую декорируем
+T = TypeVar("T")  # Обобщённый тип для возвращаемого значения
+P = ParamSpec("P")  # Параметры функции, которую декорируем
 
 
 def log(filename: Optional[str] = None) -> Callable[[Callable[P, T]], Callable[P, T]]:
@@ -18,15 +18,15 @@ def log(filename: Optional[str] = None) -> Callable[[Callable[P, T]], Callable[P
                     file.write(f"Start execution {func.__name__}\n")
 
             else:
-                print(f"Start execution '{func.__name__}'")
+                print(f"Start execution {func.__name__}")
 
             try:
                 result = func(*args, **kwargs)
                 if filename:
                     with open(filename, "a") as file:
-                        file.write(f"{func.__name__} ok")
+                        file.write(f"{func.__name__} ok, result = {result}")
                 else:
-                    print(f"{func.__name__} ok")
+                    print(f"{func.__name__} ok, result = {result}")
 
                 return result
 

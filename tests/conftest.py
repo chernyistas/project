@@ -62,3 +62,18 @@ def transactions_() -> list:
             "to": "Visa Platinum 8990922113665229",
         },
     ]
+
+
+@pytest.fixture
+def transactions_usd() -> list:
+    return [{"operationAmount": {"amount": "100", "currency": {"code": "USD"}}}]
+
+
+@pytest.fixture
+def transactions_eur() -> list:
+    return [{"operationAmount": {"amount": "50", "currency": {"code": "EUR"}}}]
+
+
+@pytest.fixture
+def transactions_rub() -> list:
+    return [{"operationAmount": {"amount": "2000", "currency": {"code": "RUB"}}}]

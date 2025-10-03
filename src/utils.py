@@ -7,6 +7,7 @@ def load_transactions(file_path: str) -> List[Dict]:
     """
     Загружает данные о финансовых транзакциях из JSON-файла.
     """
+
     # Проверяем существование файла
     if not os.path.exists(file_path):
         print(f"Ошибка: файл '{file_path}' не найден.")

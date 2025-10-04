@@ -1,24 +1,18 @@
 import json
+import logging
 import os
+from pathlib import Path
 from typing import Dict, List
 
-import logging
-
-from pathlib import Path
-
-log_dir = Path('../logs')
+log_dir = Path("../logs")
 log_dir.mkdir(parents=True, exist_ok=True)
 
 # Создаем logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 # Создаем обработчик для записи в файл
-file_handler = logging.FileHandler(
-    log_dir / 'utils.log',
-    mode='w',
-    encoding='utf-8'
-)
-file_formatter = logging.Formatter('%(asctime)s-%(filename)s-%(levelname)s-%(message)s')
+file_handler = logging.FileHandler(log_dir / "utils.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s-%(filename)s-%(levelname)s-%(message)s")
 file_handler.setFormatter(file_formatter)
 
 logger.addHandler(file_handler)
@@ -67,5 +61,3 @@ def load_transactions(file_path: str) -> List[Dict]:
         print(f"Произошла ошибка: {str(e)}")
         logger.error(f"Произошла ошибка: {str(e)}")
         return []
-
-

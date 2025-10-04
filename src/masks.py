@@ -1,20 +1,15 @@
 import logging
-
 from pathlib import Path
 
-log_dir = Path('../logs')
+log_dir = Path("../logs")
 log_dir.mkdir(parents=True, exist_ok=True)
 
 # Создаем logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 # Создаем обработчик для записи в файл
-file_handler = logging.FileHandler(
-    log_dir / 'masks.log',
-    mode='w',
-    encoding='utf-8'
-)
-file_formatter = logging.Formatter('%(asctime)s-%(filename)s-%(levelname)s-%(message)s')
+file_handler = logging.FileHandler(log_dir / "masks.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s-%(filename)s-%(levelname)s-%(message)s")
 file_handler.setFormatter(file_formatter)
 
 logger.addHandler(file_handler)
@@ -43,9 +38,6 @@ def get_mask_card_number(card_number: int) -> str:
     masked_card = card_str[:4] + " " + card_str[4:6] + "** ****" + " " + card_str[-4:]
     logger.info("Завершение работы функции")
     return masked_card
-
-
-
 
 
 def get_mask_account(account_number: int) -> str:

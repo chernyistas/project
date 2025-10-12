@@ -7,8 +7,8 @@ from src.df_reader import df_csv_transactions, read_transactions_from_excel
 
 
 def test_csv_reader(csv_data: str) -> None:
+    # Проверка успешных транзакций
 
-    # Создаем ожидаемый результат
     expected_data = [
         {
             "id": "650703",
@@ -23,23 +23,18 @@ def test_csv_reader(csv_data: str) -> None:
         }
     ]
 
-    # Используем patch для замены открытия файла
     with patch("builtins.open", mock_open(read_data=csv_data)):
-        # Правильно настраиваем мок для DictReader
+
         with patch("csv.DictReader") as mock_dict_reader:
-            # Возвращаем итератор, а не просто словарь
+
             mock_dict_reader.return_value = iter(expected_data)
 
-            # Вызываем тестируемую функцию
             result = df_csv_transactions("dummy_path.csv")
 
-            # Проверяем результаты
             assert len(result) == 1, "Должна быть одна запись"
 
-            # Проверяем соответствие данных
             assert result == expected_data, "Данные не совпадают"
 
-            # Проверяем каждое поле
             record = result[0]
             assert record["id"] == "650703", "Неверный ID"
             assert record["state"] == "EXECUTED", "Неверное состояние"
@@ -72,11 +67,11 @@ def test_invalid_csv() -> None:
         try:
             df_csv_transactions("invalid_file.csv")
         except csv.Error as csv_error:
-            assert str(csv_error)  # Проверяем, что исключение было вызвано
+            assert str(csv_error)
 
 
 def test_read_transactions_success() -> None:
-
+    # Проверка успешных транзакций
     test_data = {"date": ["2023-01-01", "2023-01-02"], "amount": [100.0, 200.0], "description": ["Test1", "Test2"]}
     mock_df = pd.DataFrame(test_data)
 
@@ -95,6 +90,7 @@ def test_read_transactions_success() -> None:
 
 
 def test_read_transactions_file_not_found() -> None:
+    # Проверка если файл не найден
     with patch("src.df_reader.pd.read_excel") as mock_read_excel:
 
         mock_read_excel.side_effect = FileNotFoundError
@@ -105,6 +101,7 @@ def test_read_transactions_file_not_found() -> None:
 
 
 def test_read_transactions_general_error() -> None:
+    # Проверка на различные ошибки
     with patch("src.df_reader.pd.read_excel") as mock_read_excel:
 
         mock_read_excel.side_effect = Exception("Some error")
@@ -115,6 +112,7 @@ def test_read_transactions_general_error() -> None:
 
 
 def test_empty_exel_file() -> None:
+    # Проверяем обработку пустого файла
     with patch("src.df_reader.pd.read_excel") as mock_read_excel:
 
         mock_df = pd.DataFrame()

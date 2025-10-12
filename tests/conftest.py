@@ -84,3 +84,12 @@ def csv_data() -> str:
     return """id,state,date,amount,currency_name,currency_code,from,to,description
 650703,EXECUTED,2023-09-05T11:30:32Z,16210,Sol,PEN,"Счет 58803664561298323391",
 "Счет 39745660563456619397",Перевод организации"""
+
+
+@pytest.fixture
+def data() -> list:
+    return [
+        {"id": 1, "description": "Покупка в магазине"},
+        {"id": 2, "description": "Оплата услуг"},
+        {"id": 3, "description": "Покупка в супермаркете"},
+    ]

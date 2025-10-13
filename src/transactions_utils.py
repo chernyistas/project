@@ -1,5 +1,6 @@
 import logging
 import re
+from collections import Counter
 from pathlib import Path
 
 log_dir = Path("../logs")
@@ -43,27 +44,30 @@ def process_bank_search(data: list[dict], search: str) -> list[dict]:
         logger.error(f"Произошла ошибка: {str(e)}")
         raise
 
-#
-#
-# data = [
-#     {
-#         'id': 1,
-#         'amount': 1000,
-#         'date': '2023-10-01',
-#         'description': 'Оплата в магазине продуктов'
-#     },
-#     {
-#         'id': 2,
-#         'amount': 500,
-#         'date': '2023-10-02',
-#         'description': 'Перевод другу'
-#     },
-#     {
-#         'id': 3,
-#         'amount': 2000,
-#         'date': '2023-10-03',
-#         'description': 'Покупка в продуктовом магазине'
-#     }
-# ]
-# found_transactions = process_bank_search(data, 'пере')
-# print(found_transactions)
+
+def process_bank_operations(data: list[dict], categories: list) -> dict:
+    """Функция для подсчета количества операций по категориям."""
+    logger.info(f"Начата обработка {len(data)} операций ")
+    # Создаем пустой Counter
+    counter: Counter[str] = Counter()
+
+    try:
+        logger.info("Подсчитываются все подходящие операции")
+
+        for operation in data:
+            description = operation.get("description", "")
+            if description in categories:
+                counter[description] += 1
+                logger.info(f"Увеличена категория {description}")
+            else:
+                logger.warning(f"Пропущена категория {description}")
+        logger.info("Создается итоговый словарь с учетом всех категорий")
+
+        result = {category: counter[category] for category in categories}
+        logger.info(f"Завершена обработка. Результат: {result}")
+
+    except Exception as e:
+        logger.warning(f"Произошла ошибка {str(e)}")
+        raise
+
+    return result

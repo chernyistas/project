@@ -15,7 +15,7 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
-def get_mask_card_number(card_number: int) -> str:
+def get_mask_card_number(card_number: str) -> str:
     """Функция принемает  на вход номер карты и возвращает ее маску"""
     logger.info("Начало работы функции")
     # Приводим к строке и убираем пробелы
@@ -40,7 +40,7 @@ def get_mask_card_number(card_number: int) -> str:
     return masked_card
 
 
-def get_mask_account(account_number: int) -> str:
+def get_mask_account(account_number: str) -> str:
     """Функция принимает на вход номер счета и возвращает его маску"""
     logger.info("Начало работы функции")
     # Приводим к строке и убираем пробелы

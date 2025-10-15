@@ -2,13 +2,13 @@ import pytest
 
 
 @pytest.fixture
-def card_basic() -> int:
-    return 1234567890123456
+def card_basic() -> str:
+    return "1234567890123456"
 
 
 @pytest.fixture
-def account_basic() -> int:
-    return 12345678901234567890
+def account_basic() -> str:
+    return "12345678901234567890"
 
 
 @pytest.fixture

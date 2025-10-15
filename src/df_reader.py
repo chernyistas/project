@@ -28,7 +28,7 @@ def df_csv_transactions(file_path: str) -> List[Dict]:
 
         logger.info(f"Начинаем чтение файла: {file_path}")
         with open(file_path, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
+            reader = csv.DictReader(file, delimiter=";")
             data = list(reader)  # Преобразуем в список
             logger.info(f"Успешно прочитано {len(data)} записей")
             return data
@@ -43,23 +43,27 @@ def df_csv_transactions(file_path: str) -> List[Dict]:
 
 def read_transactions_from_excel(file_path: str) -> List[Dict]:
     """
-    Считывает финансовые операции из Excel файла и возвращает список словарей.
+    Считывает финансовые операции из Excel файла, очищает данные и возвращает список словарей.
     """
-
     try:
         logger.info(f"Начинаем чтение файла: {file_path}")
 
+        # Читаем файл
         df = pd.read_excel(file_path, sheet_name=0, header=0, engine="openpyxl")
         logger.info(f"Файл успешно прочитан. Строк в файле: {len(df)}")
+
+        # Удаляем строки с NaN:
+        df.dropna(inplace=True)
+
         # Преобразуем DataFrame в список словарей
         transactions = df.to_dict(orient="records")
         logger.info("Данные успешно преобразованы в список словарей")
         return transactions
 
     except FileNotFoundError:
-        logger.info(f"Ошибка: файл {file_path} не найден")
+        logger.error(f"Ошибка: файл {file_path} не найден")
         return []
 
     except Exception as e:
-        logger.info(f"Произошла ошибка при чтении файла: {str(e)}")
+        logger.error(f"Произошла ошибка при чтении файла: {str(e)}")
         return []

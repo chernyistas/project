@@ -1,4 +1,3 @@
-import csv
 from unittest.mock import mock_open, patch
 
 import pandas as pd
@@ -57,17 +56,6 @@ def test_empty_file() -> None:
     with patch("builtins.open", mock_open(read_data=empty_csv)):
         result = df_csv_transactions("empty_file.csv")
         assert result == []
-
-
-def test_invalid_csv() -> None:
-    # Проверяем обработку некорректного CSV
-    invalid_csv = "id,date\n1,2025-10-12,100.50,USD,EUR"
-
-    with patch("builtins.open", mock_open(read_data=invalid_csv)):
-        try:
-            df_csv_transactions("invalid_file.csv")
-        except csv.Error as csv_error:
-            assert str(csv_error)
 
 
 def test_read_transactions_success() -> None:

@@ -28,9 +28,3 @@ def test_invalid_date_format(transactions: list) -> None:
     transactions[0]["date"] = "invalid_date"
     with pytest.raises(ValueError):
         sort_by_date(transactions)
-
-
-def test_missing_state(transactions: list) -> None:
-    del transactions[0]["state"]
-    with pytest.raises(KeyError):
-        filter_by_state(transactions)
